@@ -1018,10 +1018,10 @@ footer a { color: var(--pink); text-decoration: none; }
       <button class="option-btn" onclick="selectOption(this,'tema')"><span class="opt-icon">🐱</span> Hewan Lucu</button>
       <button class="option-btn" onclick="selectOption(this,'tema')"><span class="opt-icon">🌸</span> Aesthetic Girl</button>
       <button class="option-btn" onclick="selectOption(this,'tema')"><span class="opt-icon">👑</span> Princess Royale</button>
-      <button class="option-btn" onclick="selectOption(this,'tema')"><span class="opt-icon">🦊</span> Karakter Hewan</button>
-      <button class="option-btn" onclick="selectOption(this,'tema')"><span class="opt-icon">🤖</span> Robot Lucu</button>
-      <button class="option-btn" onclick="selectOption(this,'tema')"><span class="opt-icon">🧚</span> Fairy Fantasy</button>
-      <button class="option-btn" onclick="selectOption(this,'tema')"><span class="opt-icon">🍜</span> Food Character</button>
+      <button class="option-btn pro-locked-tema" onclick="selectTemaPro(this,'🦊 Karakter Hewan')"><span class="opt-icon">🦊</span> Karakter 🔒</button>
+      <button class="option-btn pro-locked-tema" onclick="selectTemaPro(this,'🤖 Robot Lucu')"><span class="opt-icon">🤖</span> Robot 🔒</button>
+      <button class="option-btn pro-locked-tema" onclick="selectTemaPro(this,'🧚 Fairy Fantasy')"><span class="opt-icon">🧚</span> Fairy 🔒</button>
+      <button class="option-btn pro-locked-tema" onclick="selectTemaPro(this,'🍜 Food Character')"><span class="opt-icon">🍜</span> Food 🔒</button>
     </div>
     <div class="form-label">Nama / Deskripsi Karakter (Opsional)</div>
     <input class="form-input" id="namaKarakter" placeholder="Contoh: Kucing oranye gendut lucu, pakai topi baret...">
@@ -1041,14 +1041,14 @@ footer a { color: var(--pink); text-decoration: none; }
       <button class="option-btn" onclick="selectOption(this,'ekspresi')"><span class="opt-icon">🎉</span> Celebration</button>
       <button class="option-btn" onclick="selectOption(this,'ekspresi')"><span class="opt-icon">😴</span> Daily Life</button>
       <button class="option-btn" onclick="selectOption(this,'ekspresi')"><span class="opt-icon">💪</span> Motivasi</button>
-      <button class="option-btn" onclick="selectOption(this,'ekspresi')"><span class="opt-icon">😏</span> Bucin & Gombal</button>
-      <button class="option-btn" onclick="selectOption(this,'ekspresi')"><span class="opt-icon">🤑</span> Sultan & Cuan</button>
-      <button class="option-btn" onclick="selectOption(this,'ekspresi')"><span class="opt-icon">😱</span> Kaget & Shock</button>
-      <button class="option-btn" onclick="selectOption(this,'ekspresi')"><span class="opt-icon">🥳</span> Ultah & Perayaan</button>
-      <button class="option-btn" onclick="selectOption(this,'ekspresi')"><span class="opt-icon">🙏</span> Minta Maaf</button>
-      <button class="option-btn" onclick="selectOption(this,'ekspresi')"><span class="opt-icon">😎</span> Flexing & Keren</button>
-      <button class="option-btn" onclick="selectOption(this,'ekspresi')"><span class="opt-icon">🤧</span> Sakit & Manja</button>
-      <button class="option-btn" onclick="selectOption(this,'ekspresi')"><span class="opt-icon">💤</span> Ngantuk & Males</button>
+      <button class="option-btn pro-locked-ekspresi" onclick="selectEkspresiPro(this,'😏 Bucin & Gombal')"><span class="opt-icon">😏</span> Bucin 🔒</button>
+      <button class="option-btn pro-locked-ekspresi" onclick="selectEkspresiPro(this,'🤑 Sultan & Cuan')"><span class="opt-icon">🤑</span> Sultan 🔒</button>
+      <button class="option-btn pro-locked-ekspresi" onclick="selectEkspresiPro(this,'😱 Kaget & Shock')"><span class="opt-icon">😱</span> Kaget 🔒</button>
+      <button class="option-btn pro-locked-ekspresi" onclick="selectEkspresiPro(this,'🥳 Ultah & Perayaan')"><span class="opt-icon">🥳</span> Ultah 🔒</button>
+      <button class="option-btn pro-locked-ekspresi" onclick="selectEkspresiPro(this,'🙏 Minta Maaf')"><span class="opt-icon">🙏</span> Maaf 🔒</button>
+      <button class="option-btn pro-locked-ekspresi" onclick="selectEkspresiPro(this,'😎 Flexing & Keren')"><span class="opt-icon">😎</span> Flexing 🔒</button>
+      <button class="option-btn pro-locked-ekspresi" onclick="selectEkspresiPro(this,'🤧 Sakit & Manja')"><span class="opt-icon">🤧</span> Sakit 🔒</button>
+      <button class="option-btn pro-locked-ekspresi" onclick="selectEkspresiPro(this,'💤 Ngantuk & Males')"><span class="opt-icon">💤</span> Ngantuk 🔒</button>
     </div>
     <div class="form-label">Teks pada Sticker (Opsional)</div>
     <div class="sticker-preview">
@@ -1091,18 +1091,18 @@ footer a { color: var(--pink); text-decoration: none; }
       <div class="color-btn" style="background:linear-gradient(135deg,#86efac,#22c55e)" onclick="selectColor(this,'Mint & Emerald')" title="Green"></div>
       <div class="color-btn" style="background:linear-gradient(135deg,#fde68a,#f59e0b)" onclick="selectColor(this,'Pastel Yellow & Gold')" title="Yellow"></div>
       <div class="color-btn" style="background:linear-gradient(135deg,#fdba74,#ea580c)" onclick="selectColor(this,'Peach & Orange')" title="Orange"></div>
-      <div class="color-btn" style="background:linear-gradient(135deg,#f9a8d4,#fb7185,#c084fc)" onclick="selectColor(this,'Rainbow Pastel')" title="Rainbow"></div>
-      <div class="color-btn" style="background:linear-gradient(135deg,#e2e8f0,#94a3b8)" onclick="selectColor(this,'Monochrome Clean')" title="Mono"></div>
-      <div class="color-btn" style="background:linear-gradient(135deg,#1a1a2e,#7b2fff,#00d4ff)" onclick="selectColor(this,'Dark Galaxy - Hitam Ungu Biru')" title="Dark Galaxy"></div>
-      <div class="color-btn" style="background:linear-gradient(135deg,#ffd6c0,#ffb3a0,#fff5f0)" onclick="selectColor(this,'Peach Blossom - Peach Coral Putih')" title="Peach Blossom"></div>
-      <div class="color-btn" style="background:linear-gradient(135deg,#ffffff,#f0f0f0,#d0d0d0)" onclick="selectColor(this,'Monochrome White - Putih Bersih Abu')" title="Mono White"></div>
-      <div class="color-btn" style="background:linear-gradient(135deg,#00d4ff,#00b4d8,#48cae4)" onclick="selectColor(this,'Ocean Vibes - Biru Tosca Turquoise')" title="Ocean"></div>
-      <div class="color-btn" style="background:linear-gradient(135deg,#c0392b,#e91e8c,#6b1a2a)" onclick="selectColor(this,'Berry Sweet - Merah Pink Maroon')" title="Berry"></div>
-      <div class="color-btn" style="background:linear-gradient(135deg,#ff6b35,#f7c59f,#ffdd57)" onclick="selectColor(this,'Tropical Sunset - Oranye Merah Kuning')" title="Tropical"></div>
-      <div class="color-btn" style="background:linear-gradient(135deg,#ffd6e7,#c3f0ca,#d4e8ff,#fff3b0)" onclick="selectColor(this,'Pastel Rainbow - Semua Warna Pastel')" title="Pastel Rainbow"></div>
-      <div class="color-btn" style="background:linear-gradient(135deg,#0a0a0a,#c9a84c,#1a1a1a)" onclick="selectColor(this,'Black & Gold - Hitam Elegan Gold')" title="Black Gold"></div>
-      <div class="color-btn" style="background:linear-gradient(135deg,#ffe4e8,#ffb7c5,#c8f0c0)" onclick="selectColor(this,'Sakura Soft - Pink Muda Putih Hijau')" title="Sakura"></div>
-      <div class="color-btn" style="background:linear-gradient(135deg,#a8d5a2,#f5f0e8,#8b6914)" onclick="selectColor(this,'Nature Fresh - Hijau Muda Cream Coklat')" title="Nature"></div>
+      <div class="color-btn pro-locked-color" style="background:linear-gradient(135deg,#f9a8d4,#fb7185,#c084fc);opacity:0.5;" onclick="selectColorPro(this,'Rainbow Pastel')" title="Rainbow 🔒"></div>
+      <div class="color-btn pro-locked-color" style="background:linear-gradient(135deg,#e2e8f0,#94a3b8);opacity:0.5;" onclick="selectColorPro(this,'Monochrome Clean')" title="Mono 🔒"></div>
+      <div class="color-btn pro-locked-color" style="background:linear-gradient(135deg,#1a1a2e,#7b2fff,#00d4ff);opacity:0.5;position:relative;" onclick="selectColorPro(this,'Dark Galaxy - Hitam Ungu Biru')" title="Dark Galaxy 🔒"></div>
+      <div class="color-btn pro-locked-color" style="background:linear-gradient(135deg,#ffd6c0,#ffb3a0,#fff5f0);opacity:0.5;" onclick="selectColorPro(this,'Peach Blossom - Peach Coral Putih')" title="Peach Blossom 🔒"></div>
+      <div class="color-btn pro-locked-color" style="background:linear-gradient(135deg,#ffffff,#f0f0f0,#d0d0d0);opacity:0.5;" onclick="selectColorPro(this,'Monochrome White - Putih Bersih Abu')" title="Mono White 🔒"></div>
+      <div class="color-btn pro-locked-color" style="background:linear-gradient(135deg,#00d4ff,#00b4d8,#48cae4);opacity:0.5;" onclick="selectColorPro(this,'Ocean Vibes - Biru Tosca Turquoise')" title="Ocean 🔒"></div>
+      <div class="color-btn pro-locked-color" style="background:linear-gradient(135deg,#c0392b,#e91e8c,#6b1a2a);opacity:0.5;" onclick="selectColorPro(this,'Berry Sweet - Merah Pink Maroon')" title="Berry 🔒"></div>
+      <div class="color-btn pro-locked-color" style="background:linear-gradient(135deg,#ff6b35,#f7c59f,#ffdd57);opacity:0.5;" onclick="selectColorPro(this,'Tropical Sunset - Oranye Merah Kuning')" title="Tropical 🔒"></div>
+      <div class="color-btn pro-locked-color" style="background:linear-gradient(135deg,#ffd6e7,#c3f0ca,#d4e8ff,#fff3b0);opacity:0.5;" onclick="selectColorPro(this,'Pastel Rainbow - Semua Warna Pastel')" title="Pastel Rainbow 🔒"></div>
+      <div class="color-btn pro-locked-color" style="background:linear-gradient(135deg,#0a0a0a,#c9a84c,#1a1a1a);opacity:0.5;" onclick="selectColorPro(this,'Black & Gold - Hitam Elegan Gold')" title="Black Gold 🔒"></div>
+      <div class="color-btn pro-locked-color" style="background:linear-gradient(135deg,#ffe4e8,#ffb7c5,#c8f0c0);opacity:0.5;" onclick="selectColorPro(this,'Sakura Soft - Pink Muda Putih Hijau')" title="Sakura 🔒"></div>
+      <div class="color-btn pro-locked-color" style="background:linear-gradient(135deg,#a8d5a2,#f5f0e8,#8b6914);opacity:0.5;" onclick="selectColorPro(this,'Nature Fresh - Hijau Muda Cream Coklat')" title="Nature 🔒"></div>
     </div>
   </div>
 
@@ -1145,9 +1145,9 @@ footer a { color: var(--pink); text-decoration: none; }
     <div class="form-label">Pilih Tipe</div>
     <div class="options-grid">
       <button class="option-btn selected" onclick="selectTipe(this,'Sticker Tunggal')"><span class="opt-icon">👤</span> Tunggal</button>
-      <button class="option-btn" onclick="selectTipe(this,'Sticker Couple Pasangan')"><span class="opt-icon">💑</span> Couple</button>
-      <button class="option-btn" onclick="selectTipe(this,'Sticker Branded UMKM')"><span class="opt-icon">🏷️</span> Branded</button>
-      <button class="option-btn" onclick="selectTipe(this,'Sticker Keluarga Family')"><span class="opt-icon">👨‍👩‍👧</span> Keluarga</button>
+      <button class="option-btn pro-locked-tipe" onclick="selectTipePro(this,'Sticker Couple Pasangan')"><span class="opt-icon">💑</span> Couple 🔒</button>
+      <button class="option-btn pro-locked-tipe" onclick="selectTipePro(this,'Sticker Branded UMKM')"><span class="opt-icon">🏷️</span> Branded 🔒</button>
+      <button class="option-btn pro-locked-tipe" onclick="selectTipePro(this,'Sticker Keluarga Family')"><span class="opt-icon">👨‍👩‍👧</span> Keluarga 🔒</button>
     </div>
     <div id="coupleSection" style="display:none;">
       <div class="form-label">Nama Pasangan</div>
@@ -1172,18 +1172,18 @@ footer a { color: var(--pink); text-decoration: none; }
     </div>
     <div class="form-label">Pilih Momen Spesial</div>
     <div class="options-grid">
-      <button class="option-btn" onclick="selectTemaSpesial(this,'Idul Fitri Lebaran')"><span class="opt-icon">🕌</span> Lebaran</button>
-      <button class="option-btn" onclick="selectTemaSpesial(this,'Valentine Day Cinta')"><span class="opt-icon">💝</span> Valentine</button>
-      <button class="option-btn" onclick="selectTemaSpesial(this,'Ulang Tahun Birthday')"><span class="opt-icon">🎂</span> Ultah</button>
-      <button class="option-btn" onclick="selectTemaSpesial(this,'Natal Christmas')"><span class="opt-icon">🎄</span> Natal</button>
-      <button class="option-btn" onclick="selectTemaSpesial(this,'Tahun Baru New Year')"><span class="opt-icon">🎆</span> Tahun Baru</button>
-      <button class="option-btn" onclick="selectTemaSpesial(this,'Ramadan Puasa')"><span class="opt-icon">🌙</span> Ramadan</button>
-      <button class="option-btn" onclick="selectTemaSpesial(this,'Wisuda Graduation')"><span class="opt-icon">🎓</span> Wisuda</button>
-      <button class="option-btn" onclick="selectTemaSpesial(this,'Pernikahan Wedding')"><span class="opt-icon">💍</span> Wedding</button>
-      <button class="option-btn" onclick="selectTemaSpesial(this,'Imlek Chinese New Year')"><span class="opt-icon">🧧</span> Imlek</button>
-      <button class="option-btn" onclick="selectTemaSpesial(this,'Halloween Seram')"><span class="opt-icon">🎃</span> Halloween</button>
-      <button class="option-btn" onclick="selectTemaSpesial(this,'Hari Ibu Mothers Day')"><span class="opt-icon">💐</span> Hari Ibu</button>
-      <button class="option-btn" onclick="selectTemaSpesial(this,'Tanpa tema spesial')"><span class="opt-icon">✨</span> Umum</button>
+      <button class="option-btn pro-locked-spesial" onclick="selectTemaSpesialPro(this,'Idul Fitri Lebaran')"><span class="opt-icon">🕌</span> Lebaran 🔒</button>
+      <button class="option-btn pro-locked-spesial" onclick="selectTemaSpesialPro(this,'Valentine Day Cinta')"><span class="opt-icon">💝</span> Valentine 🔒</button>
+      <button class="option-btn pro-locked-spesial" onclick="selectTemaSpesialPro(this,'Ulang Tahun Birthday')"><span class="opt-icon">🎂</span> Ultah 🔒</button>
+      <button class="option-btn pro-locked-spesial" onclick="selectTemaSpesialPro(this,'Natal Christmas')"><span class="opt-icon">🎄</span> Natal 🔒</button>
+      <button class="option-btn pro-locked-spesial" onclick="selectTemaSpesialPro(this,'Tahun Baru New Year')"><span class="opt-icon">🎆</span> Tahun Baru 🔒</button>
+      <button class="option-btn pro-locked-spesial" onclick="selectTemaSpesialPro(this,'Ramadan Puasa')"><span class="opt-icon">🌙</span> Ramadan 🔒</button>
+      <button class="option-btn pro-locked-spesial" onclick="selectTemaSpesialPro(this,'Wisuda Graduation')"><span class="opt-icon">🎓</span> Wisuda 🔒</button>
+      <button class="option-btn pro-locked-spesial" onclick="selectTemaSpesialPro(this,'Pernikahan Wedding')"><span class="opt-icon">💍</span> Wedding 🔒</button>
+      <button class="option-btn pro-locked-spesial" onclick="selectTemaSpesialPro(this,'Imlek Chinese New Year')"><span class="opt-icon">🧧</span> Imlek 🔒</button>
+      <button class="option-btn pro-locked-spesial" onclick="selectTemaSpesialPro(this,'Halloween Seram')"><span class="opt-icon">🎃</span> Halloween 🔒</button>
+      <button class="option-btn pro-locked-spesial" onclick="selectTemaSpesialPro(this,'Hari Ibu Mothers Day')"><span class="opt-icon">💐</span> Hari Ibu 🔒</button>
+      <button class="option-btn pro-locked-spesial" onclick="selectTemaSpesialPro(this,'Tanpa tema spesial')"><span class="opt-icon">✨</span> Umum 🔒</button>
     </div>
   </div>
 
@@ -1333,8 +1333,8 @@ footer a { color: var(--pink); text-decoration: none; }
           <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Akses selamanya</div>
         </div>
         <div style="text-align:right;">
-          <div style="font-size:12px;color:var(--text-muted);text-decoration:line-through;">Rp 99.000</div>
-          <div style="font-size:24px;font-weight:900;background:linear-gradient(135deg,var(--pink-light),var(--purple-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Rp 49.000</div>
+          <div style="font-size:12px;color:var(--text-muted);text-decoration:line-through;">Rp 169.000</div>
+          <div style="font-size:24px;font-weight:900;background:linear-gradient(135deg,var(--pink-light),var(--purple-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Rp 59.000</div>
           <div style="font-size:11px;color:var(--text-dim);">selamanya ✨</div>
         </div>
       </div>
@@ -1634,26 +1634,26 @@ function generateSticker() {
   // Generate prompts berdasarkan pack size
   var stickerCount = packSize;
   var expressions = [
-    'tertawa lepas, mata berbentuk lengkung gembira',
-    'pipi merona merah, ekspresi malu-malu',
-    'marah dengan asap keluar dari kepala, alis tebal',
-    'tidur dengan ZZZ mengambang di atas',
-    'melompat kegirangan dengan bintang berkilau',
-    'menangis lebay dengan air mata besar',
-    'jatuh cinta dengan mata berbentuk hati',
-    'bingung dengan tanda tanya di kepala',
-    'semangat mengepalkan tangan ke udara',
-    'malu bersembunyi di balik tangan',
-    'shock mulut terbuka lebar',
-    'cool memakai kacamata hitam',
-    'lapar melihat makanan dengan mata berbinar',
-    'mengantuk menguap dengan mata setengah terbuka',
-    'senang berputar dengan kembang api',
-    'sedih dengan awan mendung di atas kepala',
-    'sombong dengan pose angkat dagu',
-    'nervous berkeringat dengan senyum tegang',
-    'excited melompat-lompat',
-    'minta maaf dengan tangan mengatup'
+    'laughing out loud, eyes curved upward with joy',
+    'blushing cheeks, shy and embarrassed expression',
+    'angry with steam coming out of head, thick eyebrows',
+    'sleeping with ZZZ floating above',
+    'jumping with excitement, sparkling stars around',
+    'crying dramatically with big cartoon tears',
+    'in love with heart-shaped eyes',
+    'confused with question marks floating above',
+    'motivated pumping fist in the air',
+    'shy hiding face behind hands',
+    'shocked with wide open mouth',
+    'cool wearing sunglasses',
+    'hungry staring at food with sparkling eyes',
+    'sleepy yawning with half-closed eyes',
+    'happy spinning with fireworks around',
+    'sad with rain cloud floating above',
+    'proud with chin raised high',
+    'nervous sweating with a forced smile',
+    'super excited jumping up and down',
+    'apologizing with hands pressed together'
   ];
 
   generatedPrompts = [];
@@ -1665,39 +1665,39 @@ function generateSticker() {
     var promptExpressions = expressions.slice(startIdx, endIdx);
     
     var temaSpesialTxt = selectedTemaSpesial && selectedTemaSpesial !== 'Tanpa tema spesial' ? selectedTemaSpesial : '';
-    var prompt = 'Buat ' + (endIdx - startIdx) + ' stiker WhatsApp dalam 1 set dengan karakter ' + karakterDesc + '.\n\n';
+    var prompt = 'Create ' + (endIdx - startIdx) + ' WhatsApp stickers in 1 set featuring character: ' + karakterDesc + '.\n\n';
     if (tipeSticker.includes('Branded') && namaBrand) {
       prompt += '🏷️ BRANDED STICKER:\n';
-      prompt += '• Nama Brand: ' + namaBrand + '\n';
+      prompt += '• Brand Name: ' + namaBrand + '\n';
       if (sloganBrand) prompt += '• Tagline: ' + sloganBrand + '\n';
-      prompt += '• Tambahkan logo/nama brand di sudut stiker secara subtle\n\n';
+      prompt += '• Add brand logo/name subtly in the corner of each sticker\n\n';
     }
-    if (temaSpesialTxt) prompt += '🎁 TEMA SPESIAL: ' + temaSpesialTxt + '\n• Sesuaikan semua ekspresi dan elemen dekorasi dengan tema ' + temaSpesialTxt + '\n• Tambahkan elemen khas tema (ornamen, warna tema, simbol tema)\n\n';
-    prompt += '🎨 SPESIFIKASI TEKNIS:\n';
-    prompt += '• Ukuran: 512x512 px per stiker\n';
-    prompt += '• Format: PNG transparan (background transparan)\n';
-    prompt += '• Style: ' + gaya.replace(/[^\w\s]/gi, '').trim() + '\n';
-    prompt += '• Palet warna: ' + color + '\n';
-    prompt += '• Outline tebal 3-4px warna hitam untuk kejelasan\n';
-    prompt += '• Resolusi tinggi, detail tajam\n\n';
+    if (temaSpesialTxt) prompt += '🎁 SPECIAL THEME: ' + temaSpesialTxt + '\n• Adapt all expressions and decorative elements to match the ' + temaSpesialTxt + ' theme\n• Add theme-specific elements (ornaments, theme colors, symbols)\n\n';
+    prompt += '🎨 TECHNICAL SPECS:\n';
+    prompt += '• Size: 512x512 px per sticker\n';
+    prompt += '• Format: PNG transparent background\n';
+    prompt += '• Art Style: ' + gaya.replace(/[^\w\s]/gi, '').trim() + '\n';
+    prompt += '• Color Palette: ' + color + '\n';
+    prompt += '• Bold outline 3-4px black for clarity\n';
+    prompt += '• High resolution, sharp details\n\n';
     
-    prompt += '🌸 DESKRIPSI KARAKTER:\n';
-    prompt += '• Karakter: ' + karakterDesc + '\n';
-    prompt += '• Tema: ' + tema.replace(/[^\w\s]/gi, '').trim() + '\n';
-    prompt += '• Gaya: Super cute, ekspresif, penuh karakter\n';
-    if (teks) prompt += '• Teks: Tambahkan teks "' + teks + '" dengan font rounded lucu\n\n';
+    prompt += '🌸 CHARACTER DESCRIPTION:\n';
+    prompt += '• Character: ' + karakterDesc + '\n';
+    prompt += '• Theme: ' + tema.replace(/[^\w\s]/gi, '').trim() + '\n';
+    prompt += '• Style: Super cute, expressive, full of personality\n';
+    if (teks) prompt += '• Text: Add text "' + teks + '" with a cute rounded font\n\n';
     else prompt += '\n';
 
-    prompt += '😂 EKSPRESI YANG DIBUAT:\n';
+    prompt += '😂 EXPRESSIONS TO CREATE:\n';
     promptExpressions.forEach(function(exp, i) {
       prompt += (startIdx + i + 1) + '. ' + exp + '\n';
     });
 
-    prompt += '\n💡 TIPS KUALITAS:\n';
-    prompt += '• Setiap stiker harus berdiri sendiri (no overlap)\n';
-    prompt += '• Ekspresi harus jelas terbaca dari jauh\n';
-    prompt += '• Cocok untuk platform ' + platform.replace(/[^\w\s]/gi, '').trim() + '\n';
-    prompt += '• Cute, marketable, dan laris dijual!\n';
+    prompt += '\n💡 QUALITY TIPS:\n';
+    prompt += '• Each sticker must stand alone (no overlap)\n';
+    prompt += '• Expressions must be clearly readable from a distance\n';
+    prompt += '• Optimized for ' + platform.replace(/[^\w\s]/gi, '').trim() + ' platform\n';
+    prompt += '• Cute, marketable, and ready to sell!\n';
 
     // Add watermark for trial users
     var proActive = (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
@@ -1747,6 +1747,12 @@ function updateResult(idx) {
 function copyPrompt() {
   var txt = generatedPrompts[activePackIdx] || '';
   if (!txt) return;
+  // Add hidden watermark for trial - cannot be removed by user
+  if (window._isStickerProFirebase) isStickerPro = true;
+  var proActive = (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
+  if (!proActive) {
+    txt = txt + '\n\n───────────────────────────\n© WNJ Studio | Sticker Prompt Studio\nwnjstudiobywindy.github.io/Stickerprompt\nVersi Trial - Upgrade ke PRO untuk fitur lengkap\n───────────────────────────';
+  }
   if (navigator.clipboard) {
     navigator.clipboard.writeText(txt).then(function() {
       showNotif('📋 Pack ' + (activePackIdx + 1) + ' berhasil disalin!');
@@ -1930,9 +1936,61 @@ function selectGayaPro(el, gayaName) {
 function unlockAllGaya() {
   var proActive = (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
   if (!proActive) return;
-  document.querySelectorAll('.pro-locked-gaya').forEach(function(btn) {
+  document.querySelectorAll('.pro-locked-gaya, .pro-locked-tema, .pro-locked-spesial, .pro-locked-tipe, .pro-locked-ekspresi').forEach(function(btn) {
     btn.innerHTML = btn.innerHTML.replace(' 🔒', '');
   });
+  document.querySelectorAll('.pro-locked-color').forEach(function(btn) { btn.style.opacity = '1'; });
+  // Unlock mega pack 20
+  var megaBtn = document.querySelector('[onclick*="selectPackSize(this,20)"]');
+  if (!megaBtn) {
+    // Find by content
+    document.querySelectorAll('.pack-size-btn').forEach(function(btn) {
+      if (btn.innerHTML.includes('20') || btn.innerHTML.includes('Mega')) {
+        btn.innerHTML = '<span class="pack-size-num">20</span>Mega Pack';
+        btn.onclick = function() { selectPackSize(this, 20); };
+      }
+    });
+  } else {
+    megaBtn.innerHTML = '<span class="pack-size-num">20</span>Mega Pack';
+    megaBtn.onclick = function() { selectPackSize(this, 20); };
+  }
+}
+
+function _proCheck() {
+  if (window._isStickerProFirebase) isStickerPro = true;
+  return (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
+}
+
+function selectTemaSpesialPro(el, nama) {
+  if (!_proCheck()) { showNotif('🎁 Tema Spesial khusus PRO! 👑'); if(typeof openPricing === 'function') openPricing(); return; }
+  selectTemaSpesial(el, nama);
+}
+
+function selectColorPro(el, colorName) {
+  if (!_proCheck()) { showNotif('🎨 Warna ini khusus PRO! 👑'); if(typeof openPricing === 'function') openPricing(); return; }
+  document.querySelectorAll('.color-btn').forEach(function(b) { b.classList.remove('selected'); });
+  el.classList.add('selected');
+  selectedColor = colorName;
+}
+
+function selectTipePro(el, tipeNama) {
+  if (!_proCheck()) { showNotif('💑 Tipe ini khusus PRO! 👑'); if(typeof openPricing === 'function') openPricing(); return; }
+  document.querySelectorAll('.option-btn').forEach(function(b) {
+    if(b.onclick && (b.onclick.toString().includes('selectTipe') || b.onclick.toString().includes('selectTipePro'))) b.classList.remove('selected');
+  });
+  el.classList.add('selected');
+  window.selectedTipe = tipeNama;
+  el.innerHTML = el.innerHTML.replace(' 🔒', '');
+}
+
+function selectEkspresiPro(el, ekspresiNama) {
+  if (!_proCheck()) { showNotif('😂 Ekspresi ini khusus PRO! 👑'); if(typeof openPricing === 'function') openPricing(); return; }
+  document.querySelectorAll('.option-btn').forEach(function(b) {
+    if(b.onclick && (b.onclick.toString().includes("'ekspresi'") || b.onclick.toString().includes('selectEkspresiPro'))) b.classList.remove('selected');
+  });
+  el.classList.add('selected');
+  selectedEkspresi = ekspresiNama;
+  el.innerHTML = el.innerHTML.replace(' 🔒', '');
 }
 
 // ===== ESTIMASI HARGA & DESKRIPSI =====
