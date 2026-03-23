@@ -816,7 +816,9 @@ footer a { color: var(--pink); text-decoration: none; }
         const data = userDoc.data();
         if (data.isPro) {
           window._isStickerProFirebase = true;
+          isStickerPro = true;
           hideLoadingScreen('👑 PRO Aktif! Selamat berkreasi!');
+          setTimeout(function(){ if(typeof unlockAllGaya === 'function') unlockAllGaya(); }, 800);
         } else if (data.trialStart) {
           const elapsed = Math.floor((Date.now() - data.trialStart) / (1000 * 60 * 60 * 24));
           if (elapsed >= 7) {
@@ -1826,6 +1828,7 @@ var favoritList = [];
 try { favoritList = JSON.parse(localStorage.getItem('wnjStickerFav') || '[]'); } catch(e) { favoritList = []; }
 
 function saveFavorit() {
+  if (window._isStickerProFirebase) isStickerPro = true;
   var status = typeof checkStickerTrial === 'function' ? checkStickerTrial() : 'trial';
   var proActive = (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
   if (!proActive && status !== 'pro') {
@@ -1901,6 +1904,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Gaya PRO lock handler
 function selectGayaPro(el, gayaName) {
+  // Sync Firebase PRO status to local variable
+  if (window._isStickerProFirebase) isStickerPro = true;
   var proActive = (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
   if (proActive) {
     // Unlock - select normally
@@ -1911,14 +1916,28 @@ function selectGayaPro(el, gayaName) {
     });
     el.classList.add('selected');
     selectedGaya = gayaName;
+    // Remove lock icon from button text
+    var span = el.querySelector('.opt-icon');
+    var txt = el.innerHTML;
+    el.innerHTML = txt.replace(' 🔒', '');
   } else {
     showNotif('🎨 Gaya ini khusus PRO! 👑');
     if(typeof openPricing === 'function') openPricing();
   }
 }
 
+// Remove all lock icons when PRO is active
+function unlockAllGaya() {
+  var proActive = (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
+  if (!proActive) return;
+  document.querySelectorAll('.pro-locked-gaya').forEach(function(btn) {
+    btn.innerHTML = btn.innerHTML.replace(' 🔒', '');
+  });
+}
+
 // ===== ESTIMASI HARGA & DESKRIPSI =====
 function generateHarga() {
+  if (window._isStickerProFirebase) isStickerPro = true;
   var proActive = (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
   if (!proActive) {
     showNotif('💰 Estimasi Harga & Deskripsi khusus PRO! 👑');
@@ -2016,8 +2035,8 @@ document.addEventListener('DOMContentLoaded', function() {
   <div style="color:#8a7a5a;font-weight:700;letter-spacing:2px;margin-bottom:6px;">© WNJ STUDIO — HAK CIPTA DILINDUNGI</div>
   <div>Aplikasi ini adalah milik eksklusif <strong style="color:#c9a84c;">WNJ Studio</strong>.</div>
   <div>Lisensi 100% hak berwenang WNJ Studio.</div>
-  <div style="color:#e85555;font-weight:600;margin-top:4px;">⛔ DILARANG KERAS memperjualbelikan, mendistribusikan,</div>
-  <div style="color:#e85555;">menyalin, atau menggunakan ulang tanpa izin tertulis dari WNJ Studio.</div>
+  <div style="color:#f0e6cc;font-weight:600;margin-top:4px;">⛔ DILARANG KERAS memperjualbelikan, mendistribusikan,</div>
+  <div style="color:#f0e6cc;">menyalin, atau menggunakan ulang tanpa izin tertulis dari WNJ Studio.</div>
   <div style="margin-top:6px;">Pelanggaran hak cipta dapat dikenakan sanksi hukum.</div>
   <div style="margin-top:4px;color:#c9a84c;">📱 Instagram: @_wnjstudio_ | WA: 089630486382</div>
 </div>
