@@ -801,53 +801,55 @@ footer a { color: var(--pink); text-decoration: none; }
   window._stickerAuth = auth;
   window._stickerDb = db;
 
+  // Helper: hide loading screen
+  function hideLoadingScreen(msg) {
+    var ls = document.getElementById('loadingScreen');
+    if (ls) { ls.classList.add('hide'); setTimeout(() => { ls.style.display = 'none'; }, 600); }
+    if(msg) setTimeout(() => { if(typeof showNotif === 'function') showNotif(msg); }, 700);
+  }
+
+  // Helper: process user data from Firestore
+  async function processUser(user) {
+    try {
+      const userDoc = await getDoc(doc(db, "sticker_users", user.uid));
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        if (data.isPro) {
+          window._isStickerProFirebase = true;
+          hideLoadingScreen('👑 PRO Aktif! Selamat berkreasi!');
+        } else if (data.trialStart) {
+          const elapsed = Math.floor((Date.now() - data.trialStart) / (1000 * 60 * 60 * 24));
+          if (elapsed >= 7) {
+            hideLoadingScreen('⏰ Trial habis! Upgrade ke PRO ya!');
+            setTimeout(() => { if(typeof openPricing === 'function') openPricing(); }, 1200);
+          } else {
+            hideLoadingScreen('🌸 Trial aktif! ' + (7-elapsed) + ' hari tersisa');
+          }
+        } else {
+          hideLoadingScreen('🌸 Selamat datang kembali!');
+        }
+      } else {
+        await setDoc(doc(db, "sticker_users", user.uid), {
+          email: user.email || '',
+          trialStart: Date.now(),
+          isPro: false,
+          createdAt: new Date().toISOString()
+        });
+        hideLoadingScreen('🎉 Selamat datang! Trial 7 hari dimulai!');
+      }
+    } catch(e) {
+      console.log('Firestore error:', e);
+      hideLoadingScreen('🌸 Selamat datang!');
+    }
+    var authModal = document.getElementById('stickerAuthModal');
+    if (authModal) authModal.classList.remove('show');
+  }
+
   // Auth state listener
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       window._stickerUser = user;
-      try {
-        const userDoc = await getDoc(doc(db, "sticker_users", user.uid));
-        if (userDoc.exists()) {
-          const data = userDoc.data();
-          if (data.isPro) {
-            window._isStickerProFirebase = true;
-            document.getElementById('loadingScreen').classList.add('hide');
-            setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; }, 600);
-            if(typeof showNotif === 'function') showNotif('👑 PRO Aktif! Selamat berkreasi!');
-          } else if (data.trialStart) {
-            const elapsed = Math.floor((Date.now() - data.trialStart) / (1000 * 60 * 60 * 24));
-            if (elapsed >= 7) {
-              document.getElementById('loadingScreen').classList.add('hide');
-              setTimeout(() => {
-                document.getElementById('loadingScreen').style.display = 'none';
-                if(typeof openPricing === 'function') openPricing();
-                if(typeof showNotif === 'function') showNotif('⏰ Trial habis! Upgrade ke PRO ya!');
-              }, 600);
-            } else {
-              const left = 7 - elapsed;
-              document.getElementById('loadingScreen').classList.add('hide');
-              setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; }, 600);
-              if(typeof showNotif === 'function') showNotif('🌸 Trial aktif! ' + left + ' hari tersisa');
-            }
-          }
-        } else {
-          // New user via Google - create trial data and hide loading screen
-          try {
-            await setDoc(doc(db, "sticker_users", user.uid), {
-              email: user.email,
-              trialStart: Date.now(),
-              isPro: false,
-              createdAt: new Date().toISOString()
-            });
-          } catch(e) { console.log('setDoc error:', e); }
-          document.getElementById('loadingScreen').classList.add('hide');
-          setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; }, 600);
-          if(typeof showNotif === 'function') showNotif('🎉 Selamat datang! Trial 7 hari dimulai!');
-        }
-        // Hide auth modal if exists
-        var authModal = document.getElementById('stickerAuthModal');
-        if (authModal) authModal.classList.remove('show');
-      } catch(e) { console.log('Firestore error:', e); }
+      setTimeout(() => processUser(user), 1500);
     } else {
       window._stickerUser = null;
     }
