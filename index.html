@@ -780,7 +780,7 @@ footer a { color: var(--pink); text-decoration: none; }
 <!-- Firebase SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, GoogleAuthProvider, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
   import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -907,45 +907,38 @@ footer a { color: var(--pink); text-decoration: none; }
     }
   };
 
-  // Google login - pakai redirect untuk mobile
+  // Google login - pakai popup
   window.stickerGoogleLogin = async function() {
     const loadEl = document.getElementById('stickerAuthLoad');
+    const errEl = document.getElementById('stickerAuthErr');
     if(loadEl) loadEl.style.display = 'block';
+    if(errEl) errEl.style.display = 'none';
     try {
-      await signInWithRedirect(auth, googleProvider);
-    } catch(e) {
-      if(loadEl) loadEl.style.display = 'none';
-      const errEl = document.getElementById('stickerAuthErr');
-      if(errEl) { errEl.textContent = 'Login Google gagal, coba lagi.'; errEl.style.display = 'block'; }
-    }
-  };
-
-  // Handle redirect result setelah balik dari Google
-  getRedirectResult(auth).then(async (result) => {
-    if (result && result.user) {
+      const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
+      if(loadEl) loadEl.style.display = 'none';
       try {
         const userDoc = await getDoc(doc(db, "sticker_users", user.uid));
         if (!userDoc.exists()) {
           await setDoc(doc(db, "sticker_users", user.uid), {
-            email: user.email,
+            email: user.email || '',
             trialStart: Date.now(),
             isPro: false,
             createdAt: new Date().toISOString()
           });
-          if(typeof showNotif === 'function') showNotif('🎉 Selamat datang! Trial 7 hari dimulai!');
+          if(typeof showNotif === 'function') setTimeout(() => showNotif('🎉 Selamat datang! Trial 7 hari dimulai!'), 700);
         } else {
-          if(typeof showNotif === 'function') showNotif('🌸 Selamat datang kembali!');
+          if(typeof showNotif === 'function') setTimeout(() => showNotif('🌸 Selamat datang kembali!'), 700);
         }
-        document.getElementById('loadingScreen').classList.add('hide');
-        setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; }, 600);
-      } catch(e) { 
-        console.log(e);
-        document.getElementById('loadingScreen').classList.add('hide');
-        setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; }, 600);
-      }
+      } catch(e) { console.log('Firestore error:', e); }
+      document.getElementById('loadingScreen').classList.add('hide');
+      setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; }, 600);
+    } catch(e) {
+      if(loadEl) loadEl.style.display = 'none';
+      if(errEl) { errEl.textContent = 'Login Google gagal: ' + (e.message || 'coba lagi.'); errEl.style.display = 'block'; }
+      console.log('Google login error:', e);
     }
-  }).catch((e) => { console.log('Redirect error:', e); });
+  };
 </script>
 </head>
 <body>
