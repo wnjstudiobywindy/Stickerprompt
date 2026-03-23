@@ -1066,7 +1066,7 @@ footer a { color: var(--pink); text-decoration: none; }
       <div class="step-badge">3</div>
       <div class="card-title">🎨 Gaya Visual & Warna</div>
     </div>
-    <div class="form-label">Gaya Ilustrasi</div>
+    <div class="form-label">Gaya Ilustrasi <span style="font-size:10px;color:var(--text-dim);">(6 gratis · 6 PRO 👑)</span></div>
     <div class="options-grid">
       <button class="option-btn" onclick="selectOption(this,'gaya')"><span class="opt-icon">🌸</span> Kawaii Japan</button>
       <button class="option-btn" onclick="selectOption(this,'gaya')"><span class="opt-icon">✏️</span> Line Art</button>
@@ -1074,12 +1074,12 @@ footer a { color: var(--pink); text-decoration: none; }
       <button class="option-btn" onclick="selectOption(this,'gaya')"><span class="opt-icon">💎</span> 3D Glossy</button>
       <button class="option-btn" onclick="selectOption(this,'gaya')"><span class="opt-icon">🖌️</span> Watercolor</button>
       <button class="option-btn" onclick="selectOption(this,'gaya')"><span class="opt-icon">🔥</span> Bold Cartoon</button>
-      <button class="option-btn" onclick="selectOption(this,'gaya')"><span class="opt-icon">🎌</span> Anime Style</button>
-      <button class="option-btn" onclick="selectOption(this,'gaya')"><span class="opt-icon">🖼️</span> Sticker Pop Art</button>
-      <button class="option-btn" onclick="selectOption(this,'gaya')"><span class="opt-icon">🌿</span> Natural Soft</button>
-      <button class="option-btn" onclick="selectOption(this,'gaya')"><span class="opt-icon">💻</span> Pixel Art Retro</button>
-      <button class="option-btn" onclick="selectOption(this,'gaya')"><span class="opt-icon">✨</span> Glitter Sparkle</button>
-      <button class="option-btn" onclick="selectOption(this,'gaya')"><span class="opt-icon">🎭</span> Chibi 3D</button>
+      <button class="option-btn pro-locked-gaya" onclick="selectGayaPro(this,'🎌 Anime Style')"><span class="opt-icon">🎌</span> Anime 🔒</button>
+      <button class="option-btn pro-locked-gaya" onclick="selectGayaPro(this,'🖼️ Sticker Pop Art')"><span class="opt-icon">🖼️</span> Pop Art 🔒</button>
+      <button class="option-btn pro-locked-gaya" onclick="selectGayaPro(this,'🌿 Natural Soft')"><span class="opt-icon">🌿</span> Natural 🔒</button>
+      <button class="option-btn pro-locked-gaya" onclick="selectGayaPro(this,'💻 Pixel Art Retro')"><span class="opt-icon">💻</span> Pixel 🔒</button>
+      <button class="option-btn pro-locked-gaya" onclick="selectGayaPro(this,'✨ Glitter Sparkle')"><span class="opt-icon">✨</span> Glitter 🔒</button>
+      <button class="option-btn pro-locked-gaya" onclick="selectGayaPro(this,'🎭 Chibi 3D')"><span class="opt-icon">🎭</span> Chibi 3D 🔒</button>
     </div>
     <div class="form-label">Palet Warna Dominan</div>
     <div class="color-grid">
@@ -1697,6 +1697,16 @@ function generateSticker() {
     prompt += '• Cocok untuk platform ' + platform.replace(/[^\w\s]/gi, '').trim() + '\n';
     prompt += '• Cute, marketable, dan laris dijual!\n';
 
+    // Add watermark for trial users
+    var proActive = (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
+    if (!proActive) {
+      prompt += '\n═══════════════════════════════\n';
+      prompt += 'WATERMARK WAJIB (TRIAL)\n';
+      prompt += '═══════════════════════════════\n';
+      prompt += '• WAJIB tambahkan teks "WNJ Studio" di sudut kanan bawah\n';
+      prompt += '• Ukuran kecil (10-12px), semi-transparan\n';
+    }
+
     generatedPrompts.push(prompt);
   }
 
@@ -1816,6 +1826,13 @@ var favoritList = [];
 try { favoritList = JSON.parse(localStorage.getItem('wnjStickerFav') || '[]'); } catch(e) { favoritList = []; }
 
 function saveFavorit() {
+  var status = typeof checkStickerTrial === 'function' ? checkStickerTrial() : 'trial';
+  var proActive = (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
+  if (!proActive && status !== 'pro') {
+    showNotif('⭐ Simpan Favorit khusus PRO! 👑');
+    if(typeof openPricing === 'function') openPricing();
+    return;
+  }
   var txt = generatedPrompts[activePackIdx] || '';
   if (!txt) { showNotif('Generate prompt dulu ya! 😊'); return; }
   var name = prompt('Nama favorit ini:');
@@ -1882,8 +1899,32 @@ document.addEventListener('DOMContentLoaded', function() {
   if (favoritList.length > 0) renderFavorit();
 });
 
+// Gaya PRO lock handler
+function selectGayaPro(el, gayaName) {
+  var proActive = (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
+  if (proActive) {
+    // Unlock - select normally
+    document.querySelectorAll('.option-btn').forEach(function(b) {
+      if (b.getAttribute('data-group') === 'gaya' || b.classList.contains('pro-locked-gaya') || b.onclick && b.onclick.toString().includes("'gaya'")) {
+        b.classList.remove('selected');
+      }
+    });
+    el.classList.add('selected');
+    selectedGaya = gayaName;
+  } else {
+    showNotif('🎨 Gaya ini khusus PRO! 👑');
+    if(typeof openPricing === 'function') openPricing();
+  }
+}
+
 // ===== ESTIMASI HARGA & DESKRIPSI =====
 function generateHarga() {
+  var proActive = (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
+  if (!proActive) {
+    showNotif('💰 Estimasi Harga & Deskripsi khusus PRO! 👑');
+    if(typeof openPricing === 'function') openPricing();
+    return;
+  }
   var size = packSize;
   var tipe = window.selectedTipe || 'Sticker Tunggal';
   var tema = selectedTema || 'Chibi Cute';
@@ -1970,5 +2011,15 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('[onclick*="platform"]').classList.add('selected');
 });
 </script>
+<!-- LICENSE NOTICE -->
+<div style="text-align:center;padding:20px 16px;font-size:10px;color:#4a4030;line-height:1.8;border-top:1px solid rgba(201,168,76,0.1);margin-top:20px;">
+  <div style="color:#8a7a5a;font-weight:700;letter-spacing:2px;margin-bottom:6px;">© WNJ STUDIO — HAK CIPTA DILINDUNGI</div>
+  <div>Aplikasi ini adalah milik eksklusif <strong style="color:#c9a84c;">WNJ Studio</strong>.</div>
+  <div>Lisensi 100% hak berwenang WNJ Studio.</div>
+  <div style="color:#e85555;font-weight:600;margin-top:4px;">⛔ DILARANG KERAS memperjualbelikan, mendistribusikan,</div>
+  <div style="color:#e85555;">menyalin, atau menggunakan ulang tanpa izin tertulis dari WNJ Studio.</div>
+  <div style="margin-top:6px;">Pelanggaran hak cipta dapat dikenakan sanksi hukum.</div>
+  <div style="margin-top:4px;color:#c9a84c;">📱 Instagram: @_wnjstudio_ | WA: 089630486382</div>
+</div>
 </body>
 </html>
