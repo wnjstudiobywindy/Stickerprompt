@@ -831,7 +831,18 @@ footer a { color: var(--pink); text-decoration: none; }
             }
           }
         } else {
-          // New user - stay on loading screen
+          // New user via Google - create trial data and hide loading screen
+          try {
+            await setDoc(doc(db, "sticker_users", user.uid), {
+              email: user.email,
+              trialStart: Date.now(),
+              isPro: false,
+              createdAt: new Date().toISOString()
+            });
+          } catch(e) { console.log('setDoc error:', e); }
+          document.getElementById('loadingScreen').classList.add('hide');
+          setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; }, 600);
+          if(typeof showNotif === 'function') showNotif('🎉 Selamat datang! Trial 7 hari dimulai!');
         }
         // Hide auth modal if exists
         var authModal = document.getElementById('stickerAuthModal');
@@ -920,8 +931,17 @@ footer a { color: var(--pink); text-decoration: none; }
             isPro: false,
             createdAt: new Date().toISOString()
           });
+          if(typeof showNotif === 'function') showNotif('🎉 Selamat datang! Trial 7 hari dimulai!');
+        } else {
+          if(typeof showNotif === 'function') showNotif('🌸 Selamat datang kembali!');
         }
-      } catch(e) { console.log(e); }
+        document.getElementById('loadingScreen').classList.add('hide');
+        setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; }, 600);
+      } catch(e) { 
+        console.log(e);
+        document.getElementById('loadingScreen').classList.add('hide');
+        setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; }, 600);
+      }
     }
   }).catch((e) => { console.log('Redirect error:', e); });
 </script>
