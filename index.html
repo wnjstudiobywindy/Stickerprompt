@@ -1426,7 +1426,11 @@ function checkStickerTrial() {
 
 function handleMegaPackClick(el) {
   if (_isProActive()) {
-    selectPackSize(el, 20);
+    // Remove selected from all pack buttons first
+    document.querySelectorAll('.pack-size-btn').forEach(function(b) { b.classList.remove('selected'); });
+    el.classList.add('selected');
+    packSize = 20;
+    showNotif('📦 Mega Pack 20 dipilih!');
   } else {
     showNotif('📦 Mega Pack 20 khusus PRO! 👑');
     openPricing();
@@ -1973,34 +1977,52 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Gaya PRO lock handler
 function selectGayaPro(el, gayaName) {
-  // Sync Firebase PRO status to local variable
-  if (window._isStickerProFirebase) isStickerPro = true;
-  var proActive = (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
-  if (proActive) {
-    // Unlock - select normally
+  if (_isProActive()) {
     document.querySelectorAll('.option-btn').forEach(function(b) {
-      if (b.getAttribute('data-group') === 'gaya' || b.classList.contains('pro-locked-gaya') || b.onclick && b.onclick.toString().includes("'gaya'")) {
+      if (b.classList.contains('pro-locked-gaya') || (b.onclick && b.onclick.toString().includes("'gaya'"))) {
         b.classList.remove('selected');
       }
     });
     el.classList.add('selected');
     selectedGaya = gayaName;
-    // Remove lock icon from button text
-    var span = el.querySelector('.opt-icon');
-    var txt = el.innerHTML;
-    el.innerHTML = txt.replace(' 🔒', '');
+    el.innerHTML = el.innerHTML.replace(' 🔒', '');
+    showNotif('🎨 Gaya: ' + gayaName);
   } else {
     showNotif('🎨 Gaya ini khusus PRO! 👑');
     if(typeof openPricing === 'function') openPricing();
   }
 }
 
+// Tema PRO lock handler (Karakter, Robot, Fairy, Food)
+function selectTemaPro(el, temaNama) {
+  if (_isProActive()) {
+    document.querySelectorAll('.option-btn').forEach(function(b) {
+      if (b.classList.contains('pro-locked-tema') || (b.onclick && (b.onclick.toString().includes('selectOption') && b.onclick.toString().includes("'tema'")) || b.onclick.toString().includes('selectTemaPro'))) {
+        b.classList.remove('selected');
+      }
+    });
+    // Also deselect free tema buttons
+    document.querySelectorAll('[onclick*="selectOption(this,\'tema\')"]').forEach(function(b) {
+      b.classList.remove('selected');
+    });
+    el.classList.add('selected');
+    selectedTema = temaNama;
+    el.innerHTML = el.innerHTML.replace(' 🔒', '');
+    showNotif('🎭 Tema: ' + temaNama);
+  } else {
+    showNotif('🎭 Tema ini khusus PRO! 👑');
+    if(typeof openPricing === 'function') openPricing();
+  }
+}
+
 // Remove all lock icons when PRO is active
 function unlockAllGaya() {
-  var proActive = _isProActive();
-  if (!proActive) return;
+  if (!_isProActive()) return;
   document.querySelectorAll('.pro-locked-gaya, .pro-locked-tema, .pro-locked-spesial, .pro-locked-tipe, .pro-locked-ekspresi').forEach(function(btn) {
-    btn.innerHTML = btn.innerHTML.replace(' 🔒', '');
+    // Remove all 🔒 occurrences
+    btn.innerHTML = btn.innerHTML.split(' 🔒').join('');
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
   });
   document.querySelectorAll('.pro-locked-color').forEach(function(btn) { btn.style.opacity = '1'; });
   // Unlock mega pack 20
