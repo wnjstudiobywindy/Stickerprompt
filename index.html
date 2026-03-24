@@ -818,7 +818,7 @@ footer a { color: var(--pink); text-decoration: none; }
           window._isStickerProFirebase = true;
           isStickerPro = true;
           hideLoadingScreen('👑 PRO Aktif! Selamat berkreasi!');
-          setTimeout(function(){ if(typeof unlockAllGaya === 'function') unlockAllGaya(); }, 800);
+          setTimeout(function(){ if(typeof unlockAllGaya === 'function') unlockAllGaya(); if(typeof updateStickerAccess === 'function') updateStickerAccess(); }, 800);
         } else if (data.trialStart) {
           const elapsed = Math.floor((Date.now() - data.trialStart) / (1000 * 60 * 60 * 24));
           if (elapsed >= 7) {
@@ -1418,11 +1418,13 @@ function checkStickerTrial() {
 }
 
 function updateStickerAccess() {
+  if (window._isStickerProFirebase) isStickerPro = true;
   var status = checkStickerTrial();
+  var firebasePro = window._isStickerProFirebase === true;
   // Lock mega pack if not pro
   var megaBtn = document.querySelector('[onclick*="selectPackSize(this,20)"]');
   if (megaBtn) {
-    if (status === 'pro') {
+    if (status === 'pro' || firebasePro) {
       megaBtn.innerHTML = '<span class="pack-size-num">20</span>Mega Pack';
       megaBtn.onclick = function() { selectPackSize(this, 20); };
     } else {
@@ -1700,13 +1702,14 @@ function generateSticker() {
     prompt += '• Cute, marketable, and ready to sell!\n';
 
     // Add watermark for trial users
+    if (window._isStickerProFirebase) isStickerPro = true;
     var proActive = (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
     if (!proActive) {
-      prompt += '\n═══════════════════════════════\n';
-      prompt += 'WATERMARK WAJIB (TRIAL)\n';
-      prompt += '═══════════════════════════════\n';
-      prompt += '• WAJIB tambahkan teks "WNJ Studio" di sudut kanan bawah\n';
-      prompt += '• Ukuran kecil (10-12px), semi-transparan\n';
+      prompt += '\n───────────────────────────\n';
+      prompt += '© WNJ Studio Watermark (Trial Version)\n';
+      prompt += '• MANDATORY: Add "WNJ Studio" text at bottom-right corner\n';
+      prompt += '• Font size: small (10-12px), semi-transparent style\n';
+      prompt += '───────────────────────────';
     }
 
     generatedPrompts.push(prompt);
