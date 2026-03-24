@@ -1129,9 +1129,9 @@ footer a { color: var(--pink); text-decoration: none; }
         <span class="pack-size-num">12</span>
         Standard
       </button>
-      <button class="pack-size-btn" onclick="selectPackSize(this,20)">
+      <button class="pack-size-btn pro-locked-pack20" id="megaPackBtn" onclick="handleMegaPackClick(this)" style="opacity:0.55;cursor:not-allowed;position:relative;">
         <span class="pack-size-num">20</span>
-        Mega Pack
+        Mega 🔒
       </button>
     </div>
     <div class="form-label">Platform Tujuan</div>
@@ -1424,19 +1424,28 @@ function checkStickerTrial() {
   return 'trial';
 }
 
+function handleMegaPackClick(el) {
+  if (_isProActive()) {
+    selectPackSize(el, 20);
+  } else {
+    showNotif('📦 Mega Pack 20 khusus PRO! 👑');
+    openPricing();
+  }
+}
+
 function updateStickerAccess() {
   if (window._isStickerProFirebase) isStickerPro = true;
-  var status = checkStickerTrial();
-  var firebasePro = window._isStickerProFirebase === true;
-  // Lock mega pack if not pro
-  var megaBtn = document.querySelector('[onclick*="selectPackSize(this,20)"]');
+  var pro = _isProActive();
+  var megaBtn = document.getElementById('megaPackBtn');
   if (megaBtn) {
-    if (status === 'pro' || firebasePro) {
+    if (pro) {
       megaBtn.innerHTML = '<span class="pack-size-num">20</span>Mega Pack';
-      megaBtn.onclick = function() { selectPackSize(this, 20); };
+      megaBtn.style.opacity = '1';
+      megaBtn.style.cursor = 'pointer';
     } else {
       megaBtn.innerHTML = '<span class="pack-size-num">20</span>Mega 🔒';
-      megaBtn.onclick = function() { openPricing(); showNotif('Mega Pack khusus PRO! 👑'); };
+      megaBtn.style.opacity = '0.55';
+      megaBtn.style.cursor = 'not-allowed';
     }
   }
 }
@@ -1746,22 +1755,52 @@ function switchPack(idx, el) {
   updateResult(idx);
 }
 
+function _isProActive() {
+  if (window._isStickerProFirebase) isStickerPro = true;
+  return (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase === true);
+}
+
+var _WM = '\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🔖 TRIAL VERSION — WNJ STUDIO\nPrompt ini hanya untuk preview.\nUpgrade ke PRO untuk prompt tanpa watermark.\n📱 WA: 089630486382 | @_wnjstudio_\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━';
+
+function _getDisplayPrompt(idx) {
+  var raw = generatedPrompts[idx] || '';
+  if (!raw) return '';
+  if (_isProActive()) return raw;
+  // Inject watermark every ~300 chars so it cannot be "skipped"
+  var lines = raw.split('\n');
+  var result = [];
+  var lineCount = 0;
+  for (var i = 0; i < lines.length; i++) {
+    result.push(lines[i]);
+    lineCount++;
+    if (lineCount === 8) {
+      result.push('');
+      result.push('🔖 [TRIAL - WNJ STUDIO] Upgrade PRO untuk hapus watermark');
+      result.push('');
+    }
+  }
+  result.push(_WM);
+  return result.join('\n');
+}
+
 function updateResult(idx) {
-  var txt = generatedPrompts[idx] || '';
-  document.getElementById('resultText').textContent = txt;
-  document.getElementById('charCount').textContent = txt.length.toLocaleString('id-ID');
-  document.getElementById('wordCount').textContent = txt.trim().split(/\s+/).filter(Boolean).length.toLocaleString('id-ID');
+  var displayTxt = _getDisplayPrompt(idx);
+  document.getElementById('resultText').textContent = displayTxt;
+  var rawTxt = generatedPrompts[idx] || '';
+  document.getElementById('charCount').textContent = rawTxt.length.toLocaleString('id-ID');
+  document.getElementById('wordCount').textContent = rawTxt.trim().split(/\s+/).filter(Boolean).length.toLocaleString('id-ID');
 }
 
 // ===== COPY =====
 function copyPrompt() {
-  var txt = generatedPrompts[activePackIdx] || '';
-  if (!txt) return;
-  // Add hidden watermark for trial - cannot be removed by user
-  if (window._isStickerProFirebase) isStickerPro = true;
-  var proActive = (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
-  if (!proActive) {
-    txt = txt + '\n\n───────────────────────────\n© WNJ Studio | Sticker Prompt Studio\nwnjstudiobywindy.github.io/Stickerprompt\nVersi Trial - Upgrade ke PRO untuk fitur lengkap\n───────────────────────────';
+  var raw = generatedPrompts[activePackIdx] || '';
+  if (!raw) return;
+  var txt;
+  if (_isProActive()) {
+    txt = raw;
+  } else {
+    // Always inject watermark fresh from raw - cannot be stripped by editing display
+    txt = raw + _WM + '\n\n⛔ Dilarang keras menghapus watermark ini.\nLisensi: WNJ Studio — Sticker Prompt Studio';
   }
   if (navigator.clipboard) {
     navigator.clipboard.writeText(txt).then(function() {
@@ -1780,8 +1819,17 @@ function copyPrompt() {
 
 // ===== BUKA AI =====
 function bukaAI(platform) {
-  var txt = generatedPrompts[activePackIdx] || '';
-  if (!txt) { showNotif('Generate prompt dulu ya! 😊'); return; }
+  if (window._isStickerProFirebase) isStickerPro = true;
+  var raw = generatedPrompts[activePackIdx] || '';
+  if (!raw) { showNotif('Generate prompt dulu ya! 😊'); return; }
+  // Check PRO for ChatGPT & Grok
+  if ((platform === 'chatgpt' || platform === 'grok') && !_isProActive()) {
+    showNotif('🤖 ' + (platform === 'chatgpt' ? 'ChatGPT' : 'Grok') + ' khusus PRO! 👑');
+    openPricing();
+    return;
+  }
+  // For Gemini (free), still inject watermark
+  var txt = _isProActive() ? raw : (raw + _WM);
   var encoded = encodeURIComponent(txt);
   var url = '';
   if (platform === 'chatgpt') url = 'https://chat.openai.com/?q=' + encoded;
@@ -1804,6 +1852,11 @@ function showNotif(msg) {
 var isEditMode = false;
 
 function toggleEdit() {
+  if (!_isProActive()) {
+    showNotif('✏️ Edit Prompt khusus PRO! 👑');
+    openPricing();
+    return;
+  }
   isEditMode = !isEditMode;
   var viewMode = document.getElementById('viewMode');
   var editMode = document.getElementById('editMode');
@@ -1944,25 +1997,19 @@ function selectGayaPro(el, gayaName) {
 
 // Remove all lock icons when PRO is active
 function unlockAllGaya() {
-  var proActive = (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
+  var proActive = _isProActive();
   if (!proActive) return;
   document.querySelectorAll('.pro-locked-gaya, .pro-locked-tema, .pro-locked-spesial, .pro-locked-tipe, .pro-locked-ekspresi').forEach(function(btn) {
     btn.innerHTML = btn.innerHTML.replace(' 🔒', '');
   });
   document.querySelectorAll('.pro-locked-color').forEach(function(btn) { btn.style.opacity = '1'; });
   // Unlock mega pack 20
-  var megaBtn = document.querySelector('[onclick*="selectPackSize(this,20)"]');
-  if (!megaBtn) {
-    // Find by content
-    document.querySelectorAll('.pack-size-btn').forEach(function(btn) {
-      if (btn.innerHTML.includes('20') || btn.innerHTML.includes('Mega')) {
-        btn.innerHTML = '<span class="pack-size-num">20</span>Mega Pack';
-        btn.onclick = function() { selectPackSize(this, 20); };
-      }
-    });
-  } else {
+  var megaBtn = document.getElementById('megaPackBtn');
+  if (megaBtn) {
     megaBtn.innerHTML = '<span class="pack-size-num">20</span>Mega Pack';
-    megaBtn.onclick = function() { selectPackSize(this, 20); };
+    megaBtn.style.opacity = '1';
+    megaBtn.style.cursor = 'pointer';
+    megaBtn.classList.remove('pro-locked-pack20');
   }
 }
 
