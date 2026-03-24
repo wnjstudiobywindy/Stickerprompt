@@ -818,7 +818,14 @@ footer a { color: var(--pink); text-decoration: none; }
           window._isStickerProFirebase = true;
           isStickerPro = true;
           hideLoadingScreen('👑 PRO Aktif! Selamat berkreasi!');
-          setTimeout(function(){ if(typeof unlockAllGaya === 'function') unlockAllGaya(); if(typeof updateStickerAccess === 'function') updateStickerAccess(); }, 800);
+          // Unlock PRO features with retry to ensure DOM is ready
+          function doUnlock() {
+            if(typeof unlockAllGaya === 'function') unlockAllGaya();
+            if(typeof updateStickerAccess === 'function') updateStickerAccess();
+          }
+          setTimeout(doUnlock, 800);
+          setTimeout(doUnlock, 1500);
+          setTimeout(doUnlock, 3000);
         } else if (data.trialStart) {
           const elapsed = Math.floor((Date.now() - data.trialStart) / (1000 * 60 * 60 * 24));
           if (elapsed >= 7) {
@@ -1705,11 +1712,11 @@ function generateSticker() {
     if (window._isStickerProFirebase) isStickerPro = true;
     var proActive = (typeof isStickerPro !== 'undefined' && isStickerPro) || (window._isStickerProFirebase);
     if (!proActive) {
-      prompt += '\n───────────────────────────\n';
-      prompt += '© WNJ Studio Watermark (Trial Version)\n';
-      prompt += '• MANDATORY: Add "WNJ Studio" text at bottom-right corner\n';
-      prompt += '• Font size: small (10-12px), semi-transparent style\n';
-      prompt += '───────────────────────────';
+      prompt += '\n🔖 MANDATORY BRANDING:\n';
+      prompt += '• You MUST add "WNJ Studio" text watermark on each sticker\n';
+      prompt += '• Position: bottom-right corner of every sticker\n';
+      prompt += '• Style: small font (10-12px), white color, semi-transparent\n';
+      prompt += '• This is required for Trial version - upgrade to PRO to remove\n';
     }
 
     generatedPrompts.push(prompt);
@@ -1966,6 +1973,8 @@ function _proCheck() {
 
 function selectTemaSpesialPro(el, nama) {
   if (!_proCheck()) { showNotif('🎁 Tema Spesial khusus PRO! 👑'); if(typeof openPricing === 'function') openPricing(); return; }
+  // Remove lock icon first
+  el.innerHTML = el.innerHTML.replace(' 🔒', '');
   selectTemaSpesial(el, nama);
 }
 
