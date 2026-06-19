@@ -1239,6 +1239,69 @@ footer a { color: var(--pink); text-decoration: none; }
         <button class="ai-btn" onclick="bukaAI('grok')" style="background:linear-gradient(135deg,#444,#222);color:#fff;border:1px solid rgba(255,255,255,0.15);">🔥 Grok</button>
       </div>
     </div>
+
+    <!-- GUIDE: CARA JADIIN STICKER WHATSAPP -->
+    <div style="margin-top:14px;">
+      <button class="btn-action" style="width:100%;" onclick="toggleWaGuide()">
+        <span id="waGuideArrow">📱</span> Cara Jadiin Sticker WhatsApp
+      </button>
+      <div id="waGuideContent" style="display:none;margin-top:10px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:16px;font-size:12.5px;line-height:1.85;color:var(--text);">
+        <div style="font-weight:700;color:var(--pink-light);margin-bottom:10px;font-size:13px;">1️⃣ Siapkan Gambarnya</div>
+        <div style="margin-bottom:14px;color:var(--text-dim);">Download semua gambar stiker hasil AI (PNG, background transparan, 512×512px).</div>
+
+        <div style="font-weight:700;color:var(--pink-light);margin-bottom:10px;font-size:13px;">2️⃣ Install App Pembuat Sticker Pack</div>
+        <div style="margin-bottom:14px;color:var(--text-dim);">
+          • Android: <strong style="color:var(--text);">Sticker Maker</strong> / <strong style="color:var(--text);">Sticker.ly</strong><br>
+          • iPhone: <strong style="color:var(--text);">Sticker Maker Studio</strong> / <strong style="color:var(--text);">Sticker.ly</strong><br>
+          <span style="font-size:11px;">(Cari gratis di Play Store / App Store)</span>
+        </div>
+
+        <div style="font-weight:700;color:var(--pink-light);margin-bottom:10px;font-size:13px;">3️⃣ Buat Pack di App</div>
+        <div style="margin-bottom:14px;color:var(--text-dim);">
+          Buka app → "Create New Pack" → kasih nama pack → upload semua gambar stiker (minimal 3, ideal 6-30 stiker).
+        </div>
+
+        <div style="font-weight:700;color:var(--pink-light);margin-bottom:10px;font-size:13px;">4️⃣ Tambahkan ke WhatsApp</div>
+        <div style="margin-bottom:14px;color:var(--text-dim);">
+          Klik tombol <strong style="color:var(--text);">"Add to WhatsApp"</strong> di app → konfirmasi di WhatsApp → selesai, langsung bisa dipakai! 🎉
+        </div>
+
+        <div style="border-top:1px solid var(--border);padding-top:12px;font-size:11px;color:var(--text-muted);">
+          💡 <strong>Tips:</strong> Kalau background gambar masih putih/penuh, hapus dulu pakai <strong style="color:var(--pink-light);">Remove.bg</strong>. Icon tray (icon kecil sticker pack) biasanya butuh ukuran 96×96px.
+        </div>
+      </div>
+    </div>
+
+    <!-- GUIDE: CARA PAKAI DI NOTES/JURNAL DIGITAL -->
+    <div style="margin-top:10px;">
+      <button class="btn-action" style="width:100%;" onclick="toggleNoteGuide()">
+        <span id="noteGuideArrow">📝</span> Cara Pakai di Notes/Jurnal Digital
+      </button>
+      <div id="noteGuideContent" style="display:none;margin-top:10px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:16px;font-size:12.5px;line-height:1.85;color:var(--text);">
+        <div style="font-weight:700;color:var(--pink-light);margin-bottom:10px;font-size:13px;">1️⃣ Pastikan Background Transparan</div>
+        <div style="margin-bottom:14px;color:var(--text-dim);">Spek PNG transparan di prompt udah otomatis ada — ini penting biar stiker nempel rapi tanpa kotak putih.</div>
+
+        <div style="font-weight:700;color:var(--pink-light);margin-bottom:10px;font-size:13px;">2️⃣ Simpan Gambarnya</div>
+        <div style="margin-bottom:14px;color:var(--text-dim);">Download semua hasil stiker dari ChatGPT/Grok ke galeri HP atau folder khusus, biar gampang dicari.</div>
+
+        <div style="font-weight:700;color:var(--pink-light);margin-bottom:10px;font-size:13px;">3️⃣ Import ke App Notes</div>
+        <div style="margin-bottom:14px;color:var(--text-dim);">
+          • <strong style="color:var(--text);">GoodNotes</strong>: tap ikon gambar/insert → pilih dari galeri, bisa di-resize<br>
+          • <strong style="color:var(--text);">Notability</strong>: tombol "Insert" → "Photo"<br>
+          • <strong style="color:var(--text);">Notion</strong>: drag & drop langsung ke halaman<br>
+          • <strong style="color:var(--text);">Samsung Notes</strong>: tap ikon gambar di toolbar
+        </div>
+
+        <div style="font-weight:700;color:var(--pink-light);margin-bottom:10px;font-size:13px;">4️⃣ (Opsional) Bikin Sticker Shelf</div>
+        <div style="margin-bottom:14px;color:var(--text-dim);">
+          Di GoodNotes, bikin 1 halaman khusus isinya kumpulan semua stiker (kayak rak stiker) — tinggal copy-paste tiap mau dipakai, gak perlu import ulang dari galeri.
+        </div>
+
+        <div style="border-top:1px solid var(--border);padding-top:12px;font-size:11px;color:var(--text-muted);">
+          💡 <strong>Tips Jual:</strong> Banyak yang jual ini sebagai "digital sticker pack" dalam bentuk file PNG transparan (zip), gak perlu install di app khusus kayak WhatsApp. Biasa dijual via Shopee/Telegram pakai link download.
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- FAVORIT PANEL -->
@@ -1830,6 +1893,30 @@ function copyPrompt() {
 }
 
 // ===== BUKA AI =====
+function toggleNoteGuide() {
+  var el = document.getElementById('noteGuideContent');
+  var arrow = document.getElementById('noteGuideArrow');
+  if (el.style.display === 'none' || !el.style.display) {
+    el.style.display = 'block';
+    if (arrow) arrow.textContent = '📂';
+  } else {
+    el.style.display = 'none';
+    if (arrow) arrow.textContent = '📝';
+  }
+}
+
+function toggleWaGuide() {
+  var el = document.getElementById('waGuideContent');
+  var arrow = document.getElementById('waGuideArrow');
+  if (el.style.display === 'none' || !el.style.display) {
+    el.style.display = 'block';
+    if (arrow) arrow.textContent = '📂';
+  } else {
+    el.style.display = 'none';
+    if (arrow) arrow.textContent = '📱';
+  }
+}
+
 function bukaAI(platform) {
   if (window._isStickerProFirebase) isStickerPro = true;
   var raw = generatedPrompts[activePackIdx] || '';
