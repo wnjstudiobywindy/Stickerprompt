@@ -1208,6 +1208,7 @@ footer a { color: var(--pink); text-decoration: none; }
 
     <!-- PACK TABS -->
     <div class="pack-tabs" id="packTabs"></div>
+    <div id="packInfo" style="font-size:11px;color:var(--text-dim);line-height:1.6;margin:-4px 0 14px;padding:10px 12px;background:rgba(201,168,76,0.08);border:1px solid var(--border);border-radius:10px;"></div>
 
     <!-- MODE: VIEW / EDIT -->
     <div id="viewMode">
@@ -1679,11 +1680,12 @@ function generateSticker() {
   ];
 
   generatedPrompts = [];
-  var stickersPerPrompt = Math.ceil(stickerCount / 4);
+  var maxPerPack = 3; // max stiker per prompt biar hasil AI tetap rapi & konsisten
+  var numPacks = Math.ceil(stickerCount / maxPerPack);
 
-  for (var p = 0; p < 4; p++) {
-    var startIdx = p * stickersPerPrompt;
-    var endIdx = Math.min(startIdx + stickersPerPrompt, stickerCount);
+  for (var p = 0; p < numPacks; p++) {
+    var startIdx = p * maxPerPack;
+    var endIdx = Math.min(startIdx + maxPerPack, stickerCount);
     var promptExpressions = expressions.slice(startIdx, endIdx);
     
     var temaSpesialTxt = selectedTemaSpesial && selectedTemaSpesial !== 'Tanpa tema spesial' ? selectedTemaSpesial : '';
@@ -1735,13 +1737,19 @@ function generateSticker() {
     generatedPrompts.push(prompt);
   }
 
-  // Render pack tabs
+  // Render pack tabs (jumlah tab ikut menyesuaikan total stiker, gak fixed)
   var tabsHtml = '';
-  var packNames = ['Pack A', 'Pack B', 'Pack C', 'Pack D'];
-  for (var i = 0; i < 4; i++) {
-    tabsHtml += '<button class="pack-tab ' + (i === 0 ? 'active' : '') + '" onclick="switchPack(' + i + ',this)">' + packNames[i] + '</button>';
+  for (var i = 0; i < numPacks; i++) {
+    var labelName = 'Pack ' + String.fromCharCode(65 + i);
+    tabsHtml += '<button class="pack-tab ' + (i === 0 ? 'active' : '') + '" onclick="switchPack(' + i + ',this)">' + labelName + '</button>';
   }
   document.getElementById('packTabs').innerHTML = tabsHtml;
+
+  // Info total biar user gak salah paham
+  var packInfoEl = document.getElementById('packInfo');
+  if (packInfoEl) {
+    packInfoEl.innerHTML = '💡 Total <strong>' + stickerCount + ' stiker</strong>, dibagi jadi <strong>' + numPacks + ' pack</strong> (maks 3 stiker/pack biar hasil AI rapi). Generate <strong>semua tab</strong> satu-satu di AI Image Generator biar dapat ' + stickerCount + ' stiker lengkap!';
+  }
 
   // Show first prompt
   activePackIdx = 0;
@@ -1749,7 +1757,7 @@ function generateSticker() {
   rb.classList.add('show');
   updateResult(0);
   rb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  showNotif('🌸 ' + stickerCount + ' prompt sticker berhasil dibuat! ✨');
+  showNotif('🌸 Total ' + stickerCount + ' stiker siap (' + numPacks + ' pack)! Generate semua tab ya ✨');
 }
 
 function switchPack(idx, el) {
